@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: anubis-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: anubis
+      POSTGRES_PASSWORD: anubis_password
+      POSTGRES_DB: anubis_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U anubis -d anubis_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: anubis-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  opa:
+    image: openpolicyagent/opa:latest
+    container_name: anubis-opa
+    restart: always
+    command:
+      - "run"
+      - "--server"
+      - "--log-format=json"
+      - "--addr=0.0.0.0:8181"
+    ports:
+      - "8181:8181"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8181/health"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  anubis-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: anubis-api
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://anubis:anubis_password@postgres:5432/anubis_db
+      REDIS_URL: redis://redis:6379/0
+      OPA_URL: http://opa:8181
+      ANUBIS_ENV: production
+      ANUBIS_PORT: 8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      opa:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  redis_data:
