@@ -137,7 +137,7 @@ No nameless phantom may cross the River of Fire. At registration (`POST /agents`
   Agent ID = "agt_" || Trunc_24( Hex( SHA-256( SubjectPublicKeyInfo_DER ) ) )
 ```
 
-$$\mathbf{ID}(a) = \texttt{"agt\_"} \mathbin{\Vert} \mathrm{Trunc}_{24}\Big(\mathrm{Hex}\big(\mathrm{SHA256}(\mathrm{DER}(K_{\mathrm{pub}}))\big)\Big)$$
+$$\mathbf{ID}(a) = \text{"agt\_"} \parallel \mathrm{Trunc}_{24}\Big(\mathrm{Hex}\big(\mathrm{SHA256}(\mathrm{DER}(K_{\mathrm{pub}}))\big)\Big)$$
 
 * **Theorem of Soul Uniqueness:** Given the collision-resistance of $\mathrm{SHA256}$, the probability of two rogue agents generating colliding identities is bounded by $\mathcal{O}(2^{-128})$.
 * **Zero-Knowledge Principle:** The private key $K_{\mathrm{priv}}$ is generated and kept inside the agent's memory boundary. The ANUBIS control plane **never** possesses the private key.
@@ -148,11 +148,16 @@ $$\mathbf{ID}(a) = \texttt{"agt\_"} \mathbin{\Vert} \mathrm{Trunc}_{24}\Big(\mat
 Static bearer secrets are an abomination. When an agent demands tool execution, it must prove its life through cryptographic sacrifice:
 
 1. **The Nonce Incantation:** The agent requests a cryptographically secure, unpredictable 256-bit challenge nonce:
-$$\mathcal{N} \leftarrow_{\mathrm{R}} \{0,1\}^{256}, \quad \mathrm{TTL}(\mathcal{N}) \le 300\text{ seconds}$$
+
+   $$\mathcal{N} \leftarrow_{\mathrm{R}} \{0,1\}^{256}, \quad \mathrm{TTL}(\mathcal{N}) \le 300\text{ seconds}$$
+
 2. **The Signature of Flesh:** The agent signs the nonce using its private key:
-$$\sigma = \mathrm{Sign}_{K_{\mathrm{priv}}}(\mathcal{N})$$
+
+   $$\sigma = \mathrm{Sign}_{K_{\mathrm{priv}}}(\mathcal{N})$$
+
 3. **The Issuance of Ephemeral Life:** ANUBIS validates $\mathrm{Verify}_{K_{\mathrm{pub}}}(\mathcal{N}, \sigma) = 1$. Upon verification, the nonce is burned forever and an ephemeral instance-bound **ES256 JWT** is minted:
-$$\mathcal{T}_{\mathrm{jwt}} = \mathrm{Sign}_{\mathrm{ANUBIS}}\Big(\mathrm{sub}=\mathbf{ID}(a), \, \mathrm{jti}=\mu, \, \mathrm{exp}=t_{\mathrm{now}} + 900\mathrm{s}, \, \mathrm{scope}=\mathcal{S}\Big)$$
+
+   $$\mathcal{T}_{\mathrm{jwt}} = \mathrm{Sign}_{\mathrm{ANUBIS}}\Big(\mathrm{sub}=\mathbf{ID}(a), \, \mathrm{jti}=\mu, \, \mathrm{exp}=t_{\mathrm{now}} + 900\mathrm{s}, \, \mathrm{scope}=\mathcal{S}\Big)$$
 
 * **Replay Immunity:** Replayed challenges are consumed by hellfire. Intercepted tokens expire within 15 minutes.
 
