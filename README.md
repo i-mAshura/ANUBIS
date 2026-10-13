@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/banner.svg" alt="ANUBIS - The Obsidian Control Plane" width="100%">
+<img src="banner.svg" alt="ANUBIS - The Obsidian Control Plane" width="100%">
 
 **Cryptographic identity, zero-trust access and relentless surveillance for autonomous AI agents.**
 
