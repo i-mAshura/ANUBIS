@@ -10,6 +10,7 @@ from anubis.services.registry.models import Owner, Agent, AgentInstance
 from anubis.services.policy.models import Policy
 from anubis.services.gateway.models import Tool
 from anubis.services.audit.models import AuditEvent
+from anubis.services.tasks.models import Task
 from anubis.main import app
 
 # In-memory SQLite with StaticPool so all connections share the same memory DB

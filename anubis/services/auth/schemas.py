@@ -38,3 +38,10 @@ class KeypairGenerateResponse(BaseModel):
     private_key_pem: str
     curve: str = "secp256r1 (P-256)"
     algorithm: str = "ES256"
+
+
+class TokenExchangeRequest(BaseModel):
+    child_agent_id: str
+    child_instance_id: Optional[str] = "inst-sub-1"
+    requested_scope: List[str] = Field(..., min_length=1)
+    task_id: Optional[str] = None

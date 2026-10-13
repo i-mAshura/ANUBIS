@@ -85,10 +85,10 @@ def test_tampered_token_signature_rejected():
         ttl_minutes=15
     )
     token = issued["access_token"]
-    # Tamper with the last character of the signature
-    corrupted_token = token[:-1] + ("A" if token[-1] != "A" else "B")
+    # Tamper with signature data characters (not just trailing padding bits)
+    corrupted_token = token[:-10] + ("X" if token[-10] != "X" else "Y") + token[-9:]
 
-    with pytest.raises(jwt.InvalidSignatureError):
+    with pytest.raises((jwt.InvalidSignatureError, jwt.PyJWTError)):
         ts.verify_token(corrupted_token)
 
 

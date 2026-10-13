@@ -5,13 +5,14 @@ from typing import Dict, Any, Optional
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 
+import jwt
 from anubis.config import settings
 from anubis.services.registry.models import Agent
 from anubis.services.auth.crypto import (
     TokenService, verify_challenge_signature, generate_es256_keypair
 )
 from anubis.services.auth.schemas import (
-    ChallengeRequest, ChallengeResponse, TokenRequest, TokenResponse
+    ChallengeRequest, ChallengeResponse, TokenRequest, TokenResponse, TokenExchangeRequest
 )
 
 # Global TokenService instance for server token signing
@@ -128,6 +129,83 @@ class AuthService:
             task_id=request.task_id,
             on_behalf_of=request.on_behalf_of,
             delegation_chain=[agent.id],
+            ttl_minutes=settings.TOKEN_DEFAULT_TTL_MINUTES
+        )
+
+        return TokenResponse(
+            access_token=token_info["access_token"],
+            token_type=token_info["token_type"],
+            expires_in=token_info["expires_in"],
+            jti=token_info["jti"],
+            claims=token_info["claims"]
+        )
+
+    @staticmethod
+    def exchange_token(db: Session, parent_token_str: str, request: TokenExchangeRequest) -> TokenResponse:
+        """
+        Token Exchange (OAuth 2.0 style delegation):
+        An authorized parent agent delegates authority to a child sub-agent with a narrowed scope.
+        Enforces:
+        1. Parent token verification.
+        2. Child agent registration and active status.
+        3. Monotonic scope narrowing: child_scope <= parent_scope (no privilege escalation).
+        4. Extension of cryptographic 'act' lineage chain.
+        """
+        # 1. Validate and unpack parent token
+        try:
+            parent_claims = token_service.verify_token(parent_token_str)
+        except jwt.ExpiredSignatureError:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Parent delegation token has expired."
+            )
+        except jwt.PyJWTError as e:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail=f"Invalid parent token: {str(e)}"
+            )
+
+        parent_sub = parent_claims.get("sub")
+        parent_scopes = set(parent_claims.get("scope", []))
+        parent_chain = parent_claims.get("act", [parent_sub])
+        on_behalf_of = parent_claims.get("on_behalf_of", "system")
+        task_id = request.task_id or parent_claims.get("task_id", "task-default")
+        parent_jti = parent_claims.get("jti")
+
+        # 2. Verify child agent existence and active status
+        child_agent = db.query(Agent).filter(Agent.id == request.child_agent_id).first()
+        if not child_agent:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Sub-agent '{request.child_agent_id}' is not registered."
+            )
+        if child_agent.status != "active":
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=f"Sub-agent '{request.child_agent_id}' is {child_agent.status}. Cannot delegate to non-active agent."
+            )
+
+        # 3. Monotonic Scope-Subset Rule: child_scopes must be a subset of parent_scopes
+        child_scopes = set(request.requested_scope)
+        excess_scopes = child_scopes - parent_scopes
+        if excess_scopes:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=f"Privilege escalation attempt: Requested scope(s) {sorted(list(excess_scopes))} exceed parent authority {sorted(list(parent_scopes))}."
+            )
+
+        # 4. Extend delegation lineage (act claim)
+        extended_chain = list(parent_chain) + [request.child_agent_id]
+
+        # 5. Mint narrowed child token
+        token_info = token_service.issue_token(
+            agent_id=child_agent.id,
+            instance_id=request.child_instance_id or "inst-child",
+            scope=request.requested_scope,
+            task_id=task_id,
+            on_behalf_of=on_behalf_of,
+            delegation_chain=extended_chain,
+            parent_jti=parent_jti,
             ttl_minutes=settings.TOKEN_DEFAULT_TTL_MINUTES
         )
 
