@@ -11,6 +11,8 @@ from anubis.services.policy.models import Policy
 from anubis.services.gateway.models import Tool
 from anubis.services.audit.models import AuditEvent
 from anubis.services.tasks.models import Task
+from anubis.services.approvals.models import ApprovalRequest
+from anubis.services.revocation.models import RevocationEntry
 from anubis.main import app
 
 # In-memory SQLite with StaticPool so all connections share the same memory DB
@@ -24,8 +26,14 @@ engine = create_engine(
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
+from anubis.services.revocation.service import RevocationService
+from anubis.services.gateway.service import _revoked_entities
+
+
 @pytest.fixture(scope="function", autouse=True)
 def db_session():
+    RevocationService.clear_cache()
+    _revoked_entities.clear()
     Base.metadata.create_all(bind=engine)
     session = TestingSessionLocal()
     try:
@@ -33,6 +41,8 @@ def db_session():
     finally:
         session.close()
         Base.metadata.drop_all(bind=engine)
+        RevocationService.clear_cache()
+        _revoked_entities.clear()
 
 
 @pytest.fixture(scope="function")

@@ -10,6 +10,8 @@ from anubis.services.policy.router import router as policy_router
 from anubis.services.gateway.router import router as gateway_router
 from anubis.services.audit.router import router as audit_router
 from anubis.services.tasks.router import router as tasks_router
+from anubis.services.approvals.router import router as approvals_router
+from anubis.services.revocation.router import router as revocation_router
 from anubis.services.auth.service import AuthService
 # Import models to ensure they are registered with Base metadata
 from anubis.services.registry.models import Owner, Agent, AgentInstance
@@ -17,6 +19,8 @@ from anubis.services.policy.models import Policy
 from anubis.services.gateway.models import Tool
 from anubis.services.audit.models import AuditEvent
 from anubis.services.tasks.models import Task
+from anubis.services.approvals.models import ApprovalRequest
+from anubis.services.revocation.models import RevocationEntry
 
 
 @asynccontextmanager
@@ -50,6 +54,8 @@ app.include_router(policy_router)
 app.include_router(gateway_router)
 app.include_router(audit_router)
 app.include_router(tasks_router)
+app.include_router(approvals_router)
+app.include_router(revocation_router)
 
 
 @app.get("/.well-known/jwks.json", tags=["JWKS"])

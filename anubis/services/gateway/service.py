@@ -9,6 +9,8 @@ from anubis.services.auth.service import token_service
 from anubis.services.registry.models import Agent
 from anubis.services.gateway.models import Tool
 from anubis.services.audit.service import AuditService
+from anubis.services.revocation.service import RevocationService
+from anubis.services.approvals.service import ApprovalService
 from anubis.services.gateway.schemas import (
     MCPRequest, MCPResponse, MCPError, MCPCallParams, ToolCreate
 )
@@ -19,17 +21,18 @@ from anubis.services.policy.evaluator import policy_evaluator
 from anubis.services.gateway.credential_broker import credential_broker
 from anubis.services.gateway.mock_mcp import MockMCPServer
 
-# In-memory revocation set (will be synchronized with Redis in distributed deployments)
+# In-memory revocation set (compatible with existing tests)
 _revoked_entities = set()
 
 
 def revoke_entity(entity_id: str):
     """Blacklists an agent_id, instance_id, or token jti."""
     _revoked_entities.add(entity_id)
+    RevocationService.is_revoked("agent", entity_id)  # touch service
 
 
 def is_revoked(entity_id: str) -> bool:
-    return entity_id in _revoked_entities
+    return entity_id in _revoked_entities or RevocationService.is_revoked("agent", entity_id)
 
 
 class GatewayService:
@@ -84,12 +87,21 @@ class GatewayService:
         instance_id = claims.get("instance_id")
         jti = claims.get("jti")
         token_scopes = claims.get("scope", [])
+        on_behalf_of = claims.get("on_behalf_of")
+        task_id = claims.get("task_id")
 
-        # 2. Revocation Check (Kill switch)
-        if is_revoked(agent_id) or is_revoked(instance_id) or is_revoked(jti):
+        # 2. Multi-Dimensional Revocation Check (Kill switch)
+        is_blocked, block_reason = RevocationService.check_hierarchy_revoked(
+            agent_id=agent_id,
+            instance_id=instance_id,
+            task_id=task_id,
+            jti=jti,
+            principal=on_behalf_of
+        )
+        if is_blocked or is_revoked(agent_id) or is_revoked(instance_id) or is_revoked(jti):
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
-                detail="Access denied: Agent or Token has been revoked by kill switch."
+                detail=f"Access denied: {block_reason or 'Agent or Token has been revoked by kill switch.'}"
             )
 
         # 3. Agent Existence & Status Check in Registry
@@ -227,30 +239,60 @@ class GatewayService:
             )
 
         if decision_response.decision == "require_approval":
-            approval_id = str(uuid.uuid4())
-            AuditService.record_event(
-                db=db,
-                trace_id=trace_id,
-                agent_id=agent.id,
-                tool=tool_name,
-                decision="require_approval",
-                outcome="pending_approval",
-                task_id=task_id,
-                instance_id=instance_id,
-                chain=delegation_chain,
-                arguments=arguments,
-                reason=decision_response.reason,
-                latency_ms=latency_ms
-            )
-            return MCPResponse(
-                id=req_id,
-                result={
-                    "status": "pending_approval",
-                    "approval_id": approval_id,
-                    "message": f"Action paused for human review: {decision_response.reason}",
-                    "tool": tool_name
-                }
-            )
+            provided_approval_id = arguments.get("approval_id")
+            if provided_approval_id:
+                # Check if this approval was approved by a human supervisor and consume it (single-use)
+                is_valid_approval = ApprovalService.validate_and_consume_approval(
+                    db=db,
+                    approval_id=provided_approval_id,
+                    agent_id=agent.id,
+                    tool=tool_name
+                )
+                if not is_valid_approval:
+                    return MCPResponse(
+                        id=req_id,
+                        error=MCPError(
+                            code=-32003,
+                            message="Access Denied: Provided approval is invalid, expired, not yet approved, or already consumed."
+                        )
+                    )
+                # Valid approval consumed! Proceed with tool execution.
+                decision_response.decision = "allow"
+            else:
+                # Create a persistent approval request in the queue
+                appr_req = ApprovalService.create_approval_request(
+                    db=db,
+                    trace_id=trace_id,
+                    agent_id=agent.id,
+                    tool=tool_name,
+                    reason=decision_response.reason,
+                    arguments=arguments,
+                    task_id=task_id
+                )
+                AuditService.record_event(
+                    db=db,
+                    trace_id=trace_id,
+                    agent_id=agent.id,
+                    tool=tool_name,
+                    decision="require_approval",
+                    outcome="pending_approval",
+                    task_id=task_id,
+                    instance_id=instance_id,
+                    chain=delegation_chain,
+                    arguments=arguments,
+                    reason=decision_response.reason,
+                    latency_ms=latency_ms
+                )
+                return MCPResponse(
+                    id=req_id,
+                    result={
+                        "status": "pending_approval",
+                        "approval_id": appr_req.id,
+                        "message": f"Action paused for human review: {decision_response.reason}",
+                        "tool": tool_name,
+                        "expires_at": appr_req.expires_at.isoformat()
+                    }
+                )
 
         # 6. Credential Brokering: Retrieve downstream secrets (agent never sees them)
         brokered_secret = credential_broker.get_credential_for_tool(db, tool_name)
