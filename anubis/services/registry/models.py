@@ -21,7 +21,7 @@ class Owner(Base):
 class Agent(Base):
     __tablename__ = "agents"
 
-    id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    id = Column(String(64), primary_key=True)
     name = Column(String(120), nullable=False, index=True)
     owner_id = Column(String(36), ForeignKey("owners.id"), nullable=False, index=True)
     purpose = Column(Text, nullable=False)
@@ -41,7 +41,7 @@ class AgentInstance(Base):
     __tablename__ = "agent_instances"
 
     id = Column(String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
-    agent_id = Column(String(36), ForeignKey("agents.id"), nullable=False, index=True)
+    agent_id = Column(String(64), ForeignKey("agents.id"), nullable=False, index=True)
     started_at = Column(DateTime, default=datetime.utcnow, nullable=False)
     ended_at = Column(DateTime, nullable=True)
     runtime_info = Column(JSON, nullable=True)

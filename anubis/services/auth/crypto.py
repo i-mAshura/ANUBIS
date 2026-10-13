@@ -2,6 +2,7 @@ import os
 import uuid
 import base64
 import time
+import hashlib
 from typing import Tuple, Dict, Any, Optional
 from cryptography.hazmat.primitives.asymmetric import ec
 from cryptography.hazmat.primitives import serialization, hashes
@@ -27,6 +28,24 @@ def generate_es256_keypair() -> Tuple[str, str]:
     ).decode("utf-8")
 
     return private_pem, public_pem
+
+
+def derive_cryptographic_agent_id(public_key_pem: str) -> str:
+    """
+    Derives a deterministic, tamper-evident cryptographic unique identity for the agent
+    based on the SHA-256 fingerprint of its SubjectPublicKeyInfo (SPKI).
+    Format: agt_<sha256(der_bytes)[:24]>
+    """
+    public_key = serialization.load_pem_public_key(
+        public_key_pem.encode("utf-8"),
+        backend=default_backend()
+    )
+    der_bytes = public_key.public_bytes(
+        encoding=serialization.Encoding.DER,
+        format=serialization.PublicFormat.SubjectPublicKeyInfo
+    )
+    digest = hashlib.sha256(der_bytes).hexdigest()
+    return f"agt_{digest[:24]}"
 
 
 def sign_challenge(private_key_pem: str, challenge_str: str) -> str:

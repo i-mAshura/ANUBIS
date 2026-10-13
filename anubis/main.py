@@ -8,11 +8,13 @@ from anubis.services.registry.router import router as registry_router
 from anubis.services.auth.router import router as auth_router
 from anubis.services.policy.router import router as policy_router
 from anubis.services.gateway.router import router as gateway_router
+from anubis.services.audit.router import router as audit_router
 from anubis.services.auth.service import AuthService
 # Import models to ensure they are registered with Base metadata
 from anubis.services.registry.models import Owner, Agent, AgentInstance
 from anubis.services.policy.models import Policy
 from anubis.services.gateway.models import Tool
+from anubis.services.audit.models import AuditEvent
 
 
 @asynccontextmanager
@@ -44,6 +46,7 @@ app.include_router(registry_router)
 app.include_router(auth_router)
 app.include_router(policy_router)
 app.include_router(gateway_router)
+app.include_router(audit_router)
 
 
 @app.get("/.well-known/jwks.json", tags=["JWKS"])

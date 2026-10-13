@@ -1,4 +1,5 @@
 import uuid
+import time
 import jwt
 from typing import Dict, Any, Optional
 from sqlalchemy.orm import Session
@@ -7,6 +8,7 @@ from fastapi import HTTPException, status
 from anubis.services.auth.service import token_service
 from anubis.services.registry.models import Agent
 from anubis.services.gateway.models import Tool
+from anubis.services.audit.service import AuditService
 from anubis.services.gateway.schemas import (
     MCPRequest, MCPResponse, MCPError, MCPCallParams, ToolCreate
 )
@@ -146,6 +148,11 @@ class GatewayService:
             )
 
         # 5. Policy Engine Evaluation (Fail-Closed)
+        start_time = time.time()
+        trace_id = str(uuid.uuid4())
+        task_id = claims.get("task_id", "task-default")
+        delegation_chain = claims.get("act", [agent.id])
+
         eval_input = PolicyEvaluationInput(
             agent=AgentContext(
                 id=agent.id,
@@ -157,8 +164,8 @@ class GatewayService:
                 sub=claims["sub"],
                 instance_id=claims.get("instance_id"),
                 scope=token_scopes,
-                task_id=claims.get("task_id"),
-                act=claims.get("act", [])
+                task_id=task_id,
+                act=delegation_chain
             ),
             action=ActionContext(
                 tool=tool_name,
@@ -171,6 +178,21 @@ class GatewayService:
             decision_response = await policy_evaluator.evaluate(eval_input)
         except Exception as exc:
             # Absolute Fail-Closed invariant on policy error/outage
+            latency_ms = (time.time() - start_time) * 1000
+            AuditService.record_event(
+                db=db,
+                trace_id=trace_id,
+                agent_id=agent.id,
+                tool=tool_name,
+                decision="deny",
+                outcome="error",
+                task_id=task_id,
+                instance_id=instance_id,
+                chain=delegation_chain,
+                arguments=arguments,
+                reason=f"Policy evaluation failure: {str(exc)}",
+                latency_ms=latency_ms
+            )
             return MCPResponse(
                 id=req_id,
                 error=MCPError(
@@ -179,7 +201,23 @@ class GatewayService:
                 )
             )
 
+        latency_ms = (time.time() - start_time) * 1000
+
         if decision_response.decision == "deny":
+            AuditService.record_event(
+                db=db,
+                trace_id=trace_id,
+                agent_id=agent.id,
+                tool=tool_name,
+                decision="deny",
+                outcome="denied",
+                task_id=task_id,
+                instance_id=instance_id,
+                chain=delegation_chain,
+                arguments=arguments,
+                reason=decision_response.reason,
+                latency_ms=latency_ms
+            )
             return MCPResponse(
                 id=req_id,
                 error=MCPError(
@@ -189,11 +227,26 @@ class GatewayService:
             )
 
         if decision_response.decision == "require_approval":
+            approval_id = str(uuid.uuid4())
+            AuditService.record_event(
+                db=db,
+                trace_id=trace_id,
+                agent_id=agent.id,
+                tool=tool_name,
+                decision="require_approval",
+                outcome="pending_approval",
+                task_id=task_id,
+                instance_id=instance_id,
+                chain=delegation_chain,
+                arguments=arguments,
+                reason=decision_response.reason,
+                latency_ms=latency_ms
+            )
             return MCPResponse(
                 id=req_id,
                 result={
                     "status": "pending_approval",
-                    "approval_id": str(uuid.uuid4()),
+                    "approval_id": approval_id,
                     "message": f"Action paused for human review: {decision_response.reason}",
                     "tool": tool_name
                 }
@@ -210,7 +263,23 @@ class GatewayService:
             brokered_credential=brokered_secret
         )
 
-        # 8. Sanitize & redact any secrets from the outgoing result
+        # 8. Record audit event for allowed and executed tool call
+        AuditService.record_event(
+            db=db,
+            trace_id=trace_id,
+            agent_id=agent.id,
+            tool=tool_name,
+            decision="allow",
+            outcome="success",
+            task_id=task_id,
+            instance_id=instance_id,
+            chain=delegation_chain,
+            arguments=arguments,
+            reason=decision_response.reason,
+            latency_ms=latency_ms
+        )
+
+        # 9. Sanitize & redact any secrets from the outgoing result
         sanitized_result = credential_broker.redact_secrets(raw_result)
 
         return MCPResponse(

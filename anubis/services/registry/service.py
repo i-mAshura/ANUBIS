@@ -7,7 +7,7 @@ from anubis.services.registry.models import Agent, Owner, AgentInstance
 from anubis.services.registry.schemas import (
     AgentCreate, AgentUpdate, OwnerCreate, AgentInstanceCreate
 )
-from anubis.services.auth.crypto import generate_es256_keypair
+from anubis.services.auth.crypto import generate_es256_keypair, derive_cryptographic_agent_id
 
 
 class RegistryService:
@@ -56,8 +56,11 @@ class RegistryService:
             # Auto-generate ES256 keypair if not supplied
             generated_private_key, public_key = generate_es256_keypair()
 
+        # Cryptographic unique identity derived atomically from public key SubjectPublicKeyInfo fingerprint
+        cryptographic_agent_id = derive_cryptographic_agent_id(public_key)
+
         agent = Agent(
-            id=str(uuid.uuid4()),
+            id=cryptographic_agent_id,
             name=agent_in.name,
             owner_id=agent_in.owner_id,
             purpose=agent_in.purpose,
