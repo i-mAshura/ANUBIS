@@ -1,71 +1,71 @@
 # 𓁢 A N U B I S
-### *The Obsidian Control Plane: Zero-Trust IAM, Cryptographic Identity & Autonomous Surveillance for AI Agents*
+### *The Obsidian Control Plane: Cryptographic Necromancy, Zero-Trust IAM & Abyssal Surveillance for Autonomous AI Agents*
 
 <p align="center">
-  <img src="https://img.shields.io/badge/HELLFIRE-CONSUMING-800000?style=for-the-badge&logo=ghostery&logoColor=red" alt="Hellfire Consuming" />
-  <img src="https://img.shields.io/badge/JUDGMENT-FAIL--CLOSED%20GUILLOTINE-000000?style=for-the-badge&logo=shield&logoColor=darkred" alt="Guillotine Fail-Closed" />
+  <img src="https://img.shields.io/badge/HELLFIRE-ACTIVE%20CONFLAGRATION-800000?style=for-the-badge&logo=ghostery&logoColor=red" alt="Hellfire Active" />
+  <img src="https://img.shields.io/badge/JUDGMENT-FAIL--CLOSED%20GUILLOTINE-000000?style=for-the-badge&logo=shield&logoColor=crimson" alt="Guillotine Fail-Closed" />
   <img src="https://img.shields.io/badge/SCALES_OF_MAAT-ES256%20ECDSA%20P--256-4a0000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="ES256 ECDSA" />
-  <img src="https://img.shields.io/badge/AUDIT_LEDGER-SHA--256%20HASH--CHAINED-1a0000?style=for-the-badge&logo=git&logoColor=crimson" alt="Hash-Chained Audit" />
-  <img src="https://img.shields.io/badge/TRIALS_PASSED-51%2F51%20SOULS%20WEIGHED-330000?style=for-the-badge&logo=checkmarx&logoColor=lime" alt="51 Tests Passed" />
+  <img src="https://img.shields.io/badge/AUDIT_LEDGER-SHA--256%20HASH--CHAINED-1a0000?style=for-the-badge&logo=git&logoColor=darkred" alt="Hash-Chained Audit" />
+  <img src="https://img.shields.io/badge/SOULS_WEIGHED-51%2F51%20TRIALS%20PASSED-330000?style=for-the-badge&logo=checkmarx&logoColor=lime" alt="51 Tests Passed" />
   <img src="https://img.shields.io/badge/LICENSE-APACHE_2.0-550000?style=for-the-badge" alt="License" />
 </p>
 
 ```
-                             /\
-                            /  \
-                           / /\ \
-                          / /  \ \
-                         / /    \ \
-                        / /      \ \
-     __________________/ /________\ \__________________
-    |                                                  |
-    |      .---.          .-----------.          .---. |
-    |     /     \        /             \        /     \|
-    |    | () () |      |  𓁢  ANUBIS  𓁢 |      | () () ||
-    |     \  _  /        \   JUDGES    /        \  _  /|
-    |      `---'          `-----------'          `---' |
-    |     /| | |\               |               /| | |\|
-    |    / |_|_| \              ▼              / |_|_| \
-    |   /  \___/  \       [ THE SCALES ]      /  \___/  \
-    |__________________________________________________|
-                  ||                                ||
-       [ THE HEART OF THE AGENT ]      [ THE FEATHER OF TRUTH ]
-                  ||                                ||
-                  \==================================/
-                                   ||
-                                   ▼
-             "EVERY AGENT IS WEIGHED BEFORE IT PASSES,
-              AND IN THE UNDERWORLD, THE RECORD NEVER LIES."
+                                      /\
+                                     /  \
+                                    / /\ \
+                                   / /  \ \
+                                  / /    \ \
+                                 / /      \ \
+              __________________/ /________\ \__________________
+             |                                                  |
+             |       .---.          .-----------.          .---.|
+             |      /     \        /             \        /     \
+             |     | () () |      |  𓁢  ANUBIS  𓁢 |      | () () |
+             |      \  _  /        \   JUDGES    /        \  _  /
+             |       `---'          `-----------'          `---'|
+             |      /| | |\               |               /| | |\
+             |     / |_|_| \              ▼              / |_|_| \
+             |    /  \___/  \       [ THE SCALES ]      /  \___/  \
+             |__________________________________________________|
+                           ||                                ||
+                [ THE HEART OF THE AGENT ]      [ THE FEATHER OF TRUTH ]
+                           ||                                ||
+                           \==================================/
+                                            ||
+                                            ▼
+                     "EVERY AGENT IS WEIGHED BEFORE IT PASSES,
+                      AND IN THE UNDERWORLD, THE RECORD NEVER LIES."
 ```
 
 ---
 
-## 🩸 The Decrees of the Necropolis
+## 🩸 The Decrees of the Necropolis: The Horrific Reality of AI Autonomy
 
-In the mortal plane of engineering, autonomous AI agents roam like feral wraiths. They are handed almighty static master credentials; they burrow into production vaults; they whisper malicious prompts in the dark; and they spawn recursive hordes of uncontrolled sub-demons. When prompt injection strikes, the blast radius is catastrophic—because **the agent has no birthmark, no boundary, and no judge.**
+In the mortal plane of software architecture, unbaptized autonomous AI agents roam like fleshless wraiths. They are handed almighty static master credentials; they burrow through production databases; they whisper prompt-injected incantations in the shadows; and they spawn recursive swarms of ungoverned sub-demons. When prompt injection strikes, the blast radius is absolute—**because the agent has no immutable birthmark, no cryptographic boundary, and no judge.**
 
-**ANUBIS** is the black granite executioner standing between autonomous LLM agents and your crown jewels. Named after the jackal-headed god of mummification and the afterlife who balances mortal hearts on the golden scales against the feather of Ma'at:
+**ANUBIS** is the black obsidian control plane that stands at the mouth of the abyss. Named after the jackal-headed god of embalming and the afterlife who extracts the mortal heart and balances it upon the Golden Scales against the Feather of Truth:
 
-> * **If the agent's token is untampered, its purpose verified, and its scope razor-narrow: It may pass.**
-> * **If its heart is corrupted with stolen tokens, forged delegations, rogue tool probes, or burst exfiltration: Anubis drops the guillotine blade. Execution is severed in milliseconds, and the blasphemy is branded forever into the immutable ledgers of the underworld.**
+> ⚖️ **If an agent’s token is unblemished, its cryptographic lineage pure, and its scope monotonically restricted: It may pass.**  
+> ⚔️ **If its heart is weighed down with forged scopes, stolen tokens, anomalous tool probing, or prompt injection: Anubis drops the guillotine blade. Execution is severed in milliseconds, the entity is hurled into the jaws of Ammit, and the damnation is branded forever into the immutable ledgers of the dead.**
 
 ---
 
-## 🏛️ The Infernal Architecture: Two Planes of Judgment
+## 🏛️ The Infernal Architecture: Bifurcation of Planes
 
-ANUBIS enforces an unyielding divide between the ethereal plane of governance (**Control Plane**) and the iron gates of execution (**Data Plane**):
+ANUBIS enforces a mathematical air-gap between the ethereal plane of governance (**Control Plane**) and the iron gates of physical execution (**Data Plane**):
 
 ```
-                        [ MORTAL OVERSEERS & SEC-OPS ]
-                                      │
-                                      ▼
+                        [ MORTAL OVERSEERS & SEC-OPS ALTAR ]
+                                         │
+                                         ▼
     ╔═══════════════════════════════════════════════════════════════════╗
-    ║                 THE ANUBIS CONTROL PLANE (8000)                  ║
+    ║                 THE ANUBIS CONTROL PLANE (Port 8000)             ║
     ║                                                                   ║
     ║  ┌─────────────────┐   ┌─────────────────┐   ┌─────────────────┐  ║
     ║  │ AGENT REGISTRY  │   │  AUTH & TOKENS  │   │  POLICY ENGINE  │  ║
     ║  │ The Crypt of    │   │ The Weighing of │   │ The Scales of   │  ║
-    ║  │  Living Souls   │   │  the Heart Nonce│   │  Ma'at (Rego)   │  ║
+    ║  │  Living Souls   │   │  the Heart Nonce│   │  Ma'at (OPA)    │  ║
     ║  └────────┬────────┘   └────────┬────────┘   └────────┬────────┘  ║
     ║           │                     │                     │           ║
     ║  ┌────────┴────────┐   ┌────────┴────────┐   ┌────────┴────────┐  ║
@@ -80,8 +80,8 @@ ANUBIS enforces an unyielding divide between the ethereal plane of governance (*
     ║  └─────────────────────────────────────────────────────────────┘  ║
     ╚═══════════════════════════════════════════════════════════════════╝
                                       ▲
-                                      │ 𓋹 Ephemeral JWTs / JWKS Verification
-                                      │ 𓋒 Instant Kill-Switch Blacklist
+                                      │ 𓋹 Ephemeral ES256 JWTs / JWKS
+                                      │ 𓋒 Instant Multi-Vector Revocation
                                       ▼
   ┌───────────────┐       ┌───────────────────────┐       ┌────────────────┐
   │ AUTONOMOUS    │       │   THE OBSIDIAN GATE   │       │ DOWNSTREAM     │
@@ -102,104 +102,153 @@ ANUBIS enforces an unyielding divide between the ethereal plane of governance (*
 
 ---
 
-## ⚔️ The Seven Pillars of Eternal Retribution
+## ⚔️ The Seven Pillars of Eternal Retribution: Mathematical Formalisms
 
 ```
-               [ 1. CRYPTOGRAPHIC IDENTITY ]
+               [ I. ATOMIC CRYPTOGRAPHIC IDENTITY ]
                          │   agt_<sha256_spki_fingerprint>
                          ▼
-               [ 2. CHALLENGE RITUAL ]
+               [ II. THE WEIGHING OF THE HEART ]
                          │   Nonce signed with local ECDSA P-256 key
                          ▼
-               [ 3. FAIL-CLOSED GATEWAY ]
-                         │   OPA/Rego policy evaluation; no raw credentials
-                         ▼
-               [ 4. MONOTONIC DELEGATION ]
+               [ III. MONOTONIC SCOPE COLLAPSE ]
                          │   Scope(child) ⊆ Scope(parent); 'act' lineage chain
                          ▼
-               [ 5. HASH-CHAINED SURVEILLANCE ]
+               [ IV. THE OBSIDIAN GUILLOTINE ]
+                         │   P(Execution | Policy Error) ≡ 0 (Fail-Closed)
+                         ▼
+               [ V. THE CANOPIC JARS OF SECRETS ]
+                         │   Brokered downstream credentials; raw secret redaction
+                         ▼
+               [ VI. THE BOOK OF THE DEAD ]
                          │   Hash_n = SHA-256(Record_n || Hash_{n-1})
                          ▼
-               [ 6. PLEAS FOR MERCY ]
-                         │   Hold-and-resume human-in-the-loop approvals
-                         ▼
-               [ 7. FIVE-VECTOR KILL SWITCH ]
-                             Instant revocation: Agent | Instance | Task | Token | Principal
+               [ VII. THE SCOURGE OF AMMIT ]
+                             Sliding-window denial burst → 5-Vector Kill Switch
 ```
-
-### 1. 𓋹 The Crypt of Souls: Atomic Cryptographic Identity
-No nameless specter may step through the gate. At agent registration (`POST /agents`), the agent’s unique identifier is derived **atomically** from the `SHA-256` cryptographic fingerprint of its Subject Public Key Info (SPKI) under **ECDSA curve P-256**:
-
-```text
-Agent ID = "agt_" + Hex( SHA-256( SubjectPublicKeyInfo_DER ) )[0..24]
-```
-
-The private key is forged and sealed strictly on the agent's side. The ANUBIS control plane never beholds the private key.
-
-### 2. 𓇯 The Weighing of the Heart: Challenge-Response Ritual
-Static API keys are heresy. When an agent demands tool access:
-1. It begs for an unpredictable cryptographic challenge nonce: `POST /auth/challenge`.
-2. It signs the challenge in memory using its local private key.
-3. It presents the signature to `POST /auth/token`.
-4. If the signature matches the public key in the crypt, ANUBIS mints an ephemeral, instance-bound **ES256 JWT** valid for 15 minutes. Replay attacks are consumed by fire instantly.
-
-### 3. 𓍝 The Scales of Ma'at: Monotonic Scope Narrowing
-When an agent spawns a subservient sub-agent (`POST /auth/exchange`), it can never grant more authority than it holds:
-
-```text
-Scope(Child Agent) ⊆ Scope(Parent Agent)
-Lineage Tracking:  act = ["Orchestrator", "SubAgent", "Worker"]
-```
-
-Attempts at privilege escalation are crushed fail-closed. The ancestry is permanently stitched into the JWT `act` (actor) claim.
-
-### 4. 𓆣 The Obsidian Gate: Fail-Closed MCP Proxy & Credential Broker
-The agent **never touches raw credentials** for production databases, cloud services, or MCP servers.
-- The agent calls `POST /mcp/{server}` using JSON-RPC 2.0.
-- ANUBIS validates the token, queries the Rego policy engine, and retrieves the downstream secret from an isolated vault.
-- ANUBIS executes the tool downstream and scrubs all secrets, API tokens, and private keys from the response payload before returning it to the agent.
-- **Fail-Closed Guarantee:** If the policy engine faults, the network drops, or Rego rules fail to compile, the gate slams shut.
-
-### 5. 𓉣 The Book of the Dead: Cryptographic Hash-Chained Audit Trail
-Every single attempt, tool name, argument, decision, latency metric, and error is inscribed into an append-only cryptographic ledger chained by SHA-256:
-
-```text
-Hash[n] = SHA-256( Record[n] || Hash[n-1] )
-```
-
-Any attempt by a rogue agent, insider, or root user to alter or excise a single byte invalidates the ledger. A single call to `GET /audit/verify` detects mathematical tampering across milliseconds.
-
-### 6. 𓀠 The Plea for Mercy: Human-in-the-Loop Approvals
-When a tool invocation crosses high-risk thresholds (e.g., balance transfers > $5,000, database table drops, external email dispatches):
-- The Gateway intercepts the call and puts it on hold: `pending_approval`.
-- A persistent approval record is forged with a cryptographic timeout (`expires_at`).
-- A mortal supervisor inspects the request via `GET /approvals` and renders judgment (`POST /approvals/{id}/decision`).
-- The agent resumes with `approval_id`. Single-use validation guarantees the ticket cannot be reused.
-
-### 7. 𓌃 The Scourge of Ammit: Automated Anomaly Retribution & Kill Switch
-The Detection Engine continuously monitors telemetry sliding windows:
-- **Denial Burst Rule:** If an agent incurs ≥ 5 permission denials within 60 seconds, ANUBIS classifies it as hostile prompt injection or privilege probing.
-- **Automated Retribution:** Instantly suspends the agent in the database and triggers the **5-Dimensional Kill Switch**:
-
-```text
-Revocation Targets ∈ { Agent ID, Instance ID, Task ID, Token JTI, Human Principal }
-```
-
-Subsequent tool calls are blocked at the perimeter with immediate HTTP 403 termination.
 
 ---
 
-## 📜 The Complete Underworld Grimoire (API Blueprint)
+### Pillar I. 𓋹 The Crypt of Souls: Atomic Cryptographic Identity
+No nameless phantom may cross the River of Fire. At registration (`POST /agents`), an agent cannot pick an arbitrary identity. Its unique identifier is derived **atomically** from the mathematical fingerprint of its public key under the NIST P-256 elliptic curve:
+
+```text
+  Curve: E(F_p) : y^2 ≡ x^3 - 3x + b (mod p)   [NIST P-256 / secp256r1]
+  Agent ID = "agt_" || Trunc_24( Hex( SHA-256( SubjectPublicKeyInfo_DER ) ) )
+```
+
+$$\mathbf{ID}(a) = \text{“agt\_”} \mathbin{\Vert} \operatorname{Trunc}_{24}\Big(\operatorname{Hex}\big(\operatorname{SHA-256}(\operatorname{DER}(K_{\text{pub}}))\big)\Big)$$
+
+* **Theorem of Soul Uniqueness:** Given the collision-resistance of $\operatorname{SHA-256}$, the probability of two rogue agents generating colliding identities is bounded by $\mathcal{O}(2^{-128})$.
+* **Zero-Knowledge Principle:** The private key $K_{\text{priv}}$ is generated and kept inside the agent's memory boundary. The ANUBIS control plane **never** possesses the private key.
+
+---
+
+### Pillar II. 𓇯 The Weighing of the Heart: Challenge-Response Ritual
+Static bearer secrets are an abomination. When an agent demands tool execution, it must prove its life through cryptographic sacrifice:
+
+1. **The Nonce Incantation:** The agent requests a cryptographically secure, unpredictable 256-bit challenge nonce:
+$$\mathcal{N} \xleftarrow{\$} \{0,1\}^{256}, \quad \text{TTL}(\mathcal{N}) \le 300\text{ seconds}$$
+2. **The Signature of Flesh:** The agent signs the nonce using its private key:
+$$\sigma = \operatorname{ECDSA-Sign}_{K_{\text{priv}}}(\mathcal{N})$$
+3. **The Issuance of Ephemeral Life:** ANUBIS validates $\operatorname{ECDSA-Verify}_{K_{\text{pub}}}(\mathcal{N}, \sigma) = 1$. Upon verification, the nonce is burned forever and an ephemeral instance-bound **ES256 JWT** is minted:
+$$\mathcal{T}_{\text{jwt}} = \operatorname{Sign}_{\text{Anubis}}\Big(\operatorname{sub}=\mathbf{ID}(a), \, \operatorname{jti}=\mu, \, \operatorname{exp}=t_{\text{now}} + 900\text{s}, \, \operatorname{scope}=\mathcal{S}\Big)$$
+
+* **Replay Immunity:** Replayed challenges are consumed by hellfire. Intercepted tokens expire within 15 minutes.
+
+---
+
+### Pillar III. 𓍝 The Scales of Ma'at: Monotonic Scope Collapse & Lineage
+When an autonomous agent delegates work to a child sub-agent (`POST /auth/exchange`), it can **never** grant more authority than it holds. Authority is subject to monotonic entropy collapse:
+
+```text
+  Scope(Child Agent) ⊆ Scope(Parent Agent)
+  ∀ s ∈ Scope(Child): s ∈ Scope(Parent)
+  |Scope(Child)| ≤ |Scope(Parent)|
+```
+
+$$\mathcal{S}_{\text{child}} \subseteq \mathcal{S}_{\text{parent}} \quad \iff \quad \forall s \in \mathcal{S}_{\text{child}}, \; s \in \mathcal{S}_{\text{parent}}$$
+
+* **Privilege Escalation Impossibility:** If $\exists s \in \mathcal{S}_{\text{child}}$ such that $s \notin \mathcal{S}_{\text{parent}}$, the request is rejected with `HTTP 403 Forbidden`.
+* **The Ancestral Actor Chain (`act`):** The cryptographic lineage vector is appended monotonically into the token payload:
+$$\mathbf{act}_{k} = \big[ \mathbf{ID}(a_0), \, \mathbf{ID}(a_1), \, \dots, \, \mathbf{ID}(a_k) \big]$$
+Downstream tools inspect not merely the immediate caller, but the entire ancestral bloodline of agents.
+
+---
+
+### Pillar IV. 𓆣 The Obsidian Guillotine: Fail-Closed Gateway Invariant
+Every Model Context Protocol (MCP) tool execution request (`POST /mcp/{server}`) must pass under the razor edge of the Obsidian Gate.
+
+* **The Fail-Closed Mathematical Invariant:**
+$$\mathbb{P}\big(\text{Tool Execution} \mid \text{Policy Timeout} \lor \text{Network Outage} \lor \text{Rego Error}\big) \equiv 0$$
+
+If the Open Policy Agent (OPA) engine times out ($\tau > 50\text{ms}$), if policy rules fail to compile, or if a cryptographic signature is malformed by a single bit, the guillotine drops. The default state of the universe is **DENY**.
+
+---
+
+### Pillar V. 𓋖 The Canopic Jars of Secrets: Downstream Credential Isolation
+Agents must never touch, store, or view master credentials, database passwords, or third-party API keys:
+
+1. **Vault Isolation:** Downstream secrets reside strictly in the encrypted vaults of ANUBIS.
+2. **Credential Brokering:** ANUBIS injects secrets directly into downstream tool executions on behalf of the agent.
+3. **Mutilation & Redaction:** Outgoing tool responses are scrubbed with regex and string sanitizers:
+$$\operatorname{Response}_{\text{sanitized}} = \operatorname{ScrubSecrets}\big(\operatorname{Response}_{\text{raw}}, \; \mathcal{V}_{\text{secrets}}\big)$$
+Raw database tokens, passwords, and private keys can never leak into LLM context windows or conversation logs.
+
+---
+
+### Pillar VI. 𓉣 The Book of the Dead: Cryptographic Hash-Chained Necrology
+Every single tool attempt, argument payload, verdict, latency measurement, and error is inscribed into an append-only cryptographic ledger chained by `SHA-256`:
+
+```text
+  H_0 = 0000000000000000000000000000000000000000000000000000000000000000
+  H_i = SHA-256( CanonicalJSON( Event_i ) || H_{i-1} )    ∀ i ≥ 1
+```
+
+$$H_i = \operatorname{SHA-256}\Big(\operatorname{CanonicalJSON}(\mathcal{E}_i) \mathbin{\Vert} H_{i-1}\Big)$$
+
+* **Tamper Evident:** If an insider, attacker, or compromised root account alters a single character in record $k$, the chain breaks for all subsequent records $j \ge k$:
+$$\exists k : H_k \ne \operatorname{SHA-256}\big(\mathcal{E}_k \mathbin{\Vert} H_{k-1}\big) \implies \text{Tamper Alarm Triggered}$$
+A single call to `GET /audit/verify` detects mathematical corruption in milliseconds.
+
+---
+
+### Pillar VII. 𓌃 The Scourge of Ammit: Denial Bursts & 5-Dimensional Kill Switch
+The Detection Engine monitors rolling sliding-window telemetry buffers for each active soul:
+
+1. **Denial Burst Anomaly Rule:**
+$$\mathcal{D}(a, \Delta t) = \sum_{t_i \in [t_{\text{now}} - \Delta t, \, t_{\text{now}}]} \mathbb{I}\Big(\operatorname{Verdict}(a, t_i) = \text{DENY}\Big)$$
+$$\text{If } \mathcal{D}(a, 60\text{s}) \ge 5 \implies \operatorname{Action}(a) \leftarrow \text{CRITICAL SUSPENSION}$$
+
+2. **Automated Multi-Vector Retribution:** The agent is suspended in the registry, and an immediate blacklist entry is injected into the **5-Dimensional Kill Switch Manifold**:
+$$\mathbf{K} \subseteq \mathcal{A} \times \mathcal{I} \times \mathcal{T} \times \mathcal{J} \times \mathcal{P}$$
+
+```text
+  Revocation Manifold:
+  {
+    Agent ID:         agt_ca51d8ac48ed9d2f28ff05c5  (Terminates entire agent lineage)
+    Instance ID:      inst-sec-1                    (Terminates specific container)
+    Task ID:          task-detection-test           (Terminates task tree)
+    Token JTI:        c82a19b0-4f81-49b2-9981       (Terminates specific JWT)
+    Human Principal:  sec_admin                     (Terminates compromised human)
+  }
+```
+
+Subsequent calls matching any point on this manifold are obliterated with `HTTP 403 Forbidden` in sub-millisecond lookups.
+
+---
+
+## 📜 The Complete Underworld Grimoire: Full API Blueprint
 
 ```http
 ### ==================== I. THE CRYPT OF SOULS (REGISTRY) ====================
-POST   /owners                          # Inscribe mortal master / security team
-GET    /owners                          # Inspect all registered mortal owners
-GET    /owners/{id}                     # Retrieve specific owner soul
-POST   /agents                          # Inscribe new agent (Atomic ES256 P-256 ID derivation)
-GET    /agents                          # List agents (filter: active, suspended, revoked)
+POST   /owners                          # Inscribe accountable mortal master or team
+GET    /owners                          # Enumerate all registered mortal owners
+GET    /owners/{id}                     # Inspect specific owner details
+POST   /agents                          # Inscribe agent (Atomic ES256 P-256 ID derivation)
+GET    /agents                          # Enumerate agents (filter: active, suspended, revoked)
 GET    /agents/{id}                     # Inspect agent identity & stored public key
-PATCH  /agents/{id}                     # Modify status (active -> suspended -> revoked)
+PATCH  /agents/{id}                     # Mutate status (active -> suspended -> revoked)
 POST   /agents/{id}/instances           # Bind ephemeral runtime execution container
 
 ### ==================== II. THE TRIAL OF PROOF (AUTH & TOKENS) ====================
@@ -249,7 +298,7 @@ GET    /baselines/{agent_id}            # Inspect learned behavioral profile & c
 
 ## 🐍 The Serpent's Grasp: Python SDK (`anubis.sdk`)
 
-ANUBIS provides a zero-dependency, ultra-secure Python SDK engineered to wrap autonomous agent loops (LangChain, AutoGen, CrewAI, or direct OpenAI/Anthropic tool callers).
+ANUBIS ships with a zero-dependency, ultra-secure Python SDK designed to govern any LLM agent framework (LangChain, AutoGen, CrewAI, or direct OpenAI/Anthropic tool runners).
 
 ### 1. Bootstrapping an Agent with Local Cryptographic Keys
 ```python
@@ -260,7 +309,7 @@ from anubis.sdk.exceptions import (
     AnubisKillSwitchError
 )
 
-# Initialize client to the ANUBIS Control Plane
+# Connect to the ANUBIS Control Plane
 client = AnubisClient(base_url="http://localhost:8000")
 
 # Register an agent: Generates local ECDSA P-256 keys, derives agt_<hash>
@@ -275,12 +324,12 @@ agent = AnubisAgent(
 
 # Authenticate via cryptographic challenge-response
 agent.bootstrap(scope=["tools:read", "tools:finance"])
-print(f"Agent awakened with ID: {agent.agent_id}")
+print(f"Soul Awakened: {agent.agent_id}")
 ```
 
-### 2. Invoking Tools Through the Obsidian Gate
+### 2. Invoking Mediated Tools Through the Obsidian Gate
 ```python
-# Call mediated MCP tool. Credentials brokered seamlessly; secrets redacted from output.
+# MCP tool call mediated by OPA policy; downstream secrets brokered seamlessly
 result = agent.execute_tool(
     server="corp-database",
     tool_name="read_records",
@@ -289,14 +338,14 @@ result = agent.execute_tool(
 print("Execution Result:", result)
 ```
 
-### 3. Spawning Sub-Agents with Monotonic Delegation
+### 3. Spawning Sub-Agents with Monotonic Scope Collapse
 ```python
-# Spawns sub-agent with narrowed scope and 'act' lineage chain
+# Sub-agent inherits narrowed scope and 'act' lineage chain
 sub_agent = agent.spawn_subagent(
     name="Analyst-Sub01",
     purpose="Summarize balance sheets",
     task_intent="Data extraction from corporate records",
-    delegated_scope=["tools:read"] # Cannot escalate to tools:finance!
+    delegated_scope=["tools:read"] # Monotonically narrowed: cannot transfer funds!
 )
 
 # Sub-agent executes permitted read tool
@@ -306,7 +355,7 @@ sub_result = sub_agent.execute_tool(
     arguments={"table": "income_statements"}
 )
 
-# Attempting an unauthorized tool raises AnubisPolicyDeniedError
+# Attempting an unauthorized tool triggers instant policy denial
 try:
     sub_agent.execute_tool(
         server="bank-transfer",
@@ -314,27 +363,27 @@ try:
         arguments={"amount": 1000}
     )
 except AnubisPolicyDeniedError as err:
-    print(f"[FAIL-CLOSED] Access Denied: {err.reason}")
+    print(f"[FAIL-CLOSED GUILLOTINE] Access Denied: {err.reason}")
 ```
 
 ### 4. Handling Human-in-the-Loop Hold-and-Resume
 ```python
 try:
-    # High-value transactions trigger human approval
+    # High-value operations trigger human supervisor approval
     agent.execute_tool(
         server="bank-transfer",
         tool_name="execute_transfer",
         arguments={"amount": 10000, "recipient": "vendor-corp"}
     )
 except AnubisApprovalRequiredError as appr_err:
-    print(f"Action held for human review! Approval ID: {appr_err.approval_id}")
+    print(f"Action Held! Approval ID: {appr_err.approval_id}")
 
     # Supervisor approves via portal or API:
     client.decide_approval(
         approval_id=appr_err.approval_id,
         decision="approved",
         approver_id="supervisor@corp.local",
-        comment="Approved quarterly vendor payment"
+        comment="Authorized quarterly vendor payment"
     )
 
     # Agent resumes seamlessly using the approval ticket
@@ -349,9 +398,9 @@ except AnubisApprovalRequiredError as appr_err:
 
 ---
 
-## 🚀 The Ritual of Verification: Run the Live Multi-Agent Demo
+## 🚀 The Ritual of Verification: Live Multi-Agent Workflow Demo
 
-Experience the full horror of zero-trust governance live:
+Execute the live demonstration harness showcasing the complete lifecycle:
 
 ```powershell
 python examples/autonomous_research_workflow.py
@@ -415,9 +464,9 @@ python examples/autonomous_research_workflow.py
 
 ---
 
-## 🔥 The Trial of Fifty-One Flayed Souls: Test Suite
+## 🔥 The Trial of Fifty-One Flayed Souls: Test Suite (51/51 Passing)
 
-ANUBIS undergoes rigorous mathematical validation across **51 unit and integration tests** spanning cryptography, policy fail-closed behavior, hash integrity, token replay, approval locks, and SDK abstractions:
+ANUBIS undergoes mathematical validation across **51 unit and integration tests** verifying cryptographic challenges, replay rejection, monotonic delegation, tamper detection, multi-vector kill switches, and SDK abstractions:
 
 ```powershell
 python -m pytest -v
