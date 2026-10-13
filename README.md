@@ -137,10 +137,10 @@ No nameless phantom may cross the River of Fire. At registration (`POST /agents`
   Agent ID = "agt_" || Trunc_24( Hex( SHA-256( SubjectPublicKeyInfo_DER ) ) )
 ```
 
-$$\mathbf{ID}(a) = \text{“agt\_”} \mathbin{\Vert} \operatorname{Trunc}_{24}\Big(\operatorname{Hex}\big(\operatorname{SHA-256}(\operatorname{DER}(K_{\text{pub}}))\big)\Big)$$
+$$\mathbf{ID}(a) = \texttt{"agt\_"} \mathbin{\Vert} \mathrm{Trunc}_{24}\Big(\mathrm{Hex}\big(\mathrm{SHA256}(\mathrm{DER}(K_{\mathrm{pub}}))\big)\Big)$$
 
-* **Theorem of Soul Uniqueness:** Given the collision-resistance of $\operatorname{SHA-256}$, the probability of two rogue agents generating colliding identities is bounded by $\mathcal{O}(2^{-128})$.
-* **Zero-Knowledge Principle:** The private key $K_{\text{priv}}$ is generated and kept inside the agent's memory boundary. The ANUBIS control plane **never** possesses the private key.
+* **Theorem of Soul Uniqueness:** Given the collision-resistance of $\mathrm{SHA256}$, the probability of two rogue agents generating colliding identities is bounded by $\mathcal{O}(2^{-128})$.
+* **Zero-Knowledge Principle:** The private key $K_{\mathrm{priv}}$ is generated and kept inside the agent's memory boundary. The ANUBIS control plane **never** possesses the private key.
 
 ---
 
@@ -148,11 +148,11 @@ $$\mathbf{ID}(a) = \text{“agt\_”} \mathbin{\Vert} \operatorname{Trunc}_{24}\
 Static bearer secrets are an abomination. When an agent demands tool execution, it must prove its life through cryptographic sacrifice:
 
 1. **The Nonce Incantation:** The agent requests a cryptographically secure, unpredictable 256-bit challenge nonce:
-$$\mathcal{N} \xleftarrow{\$} \{0,1\}^{256}, \quad \text{TTL}(\mathcal{N}) \le 300\text{ seconds}$$
+$$\mathcal{N} \leftarrow_{\mathrm{R}} \{0,1\}^{256}, \quad \mathrm{TTL}(\mathcal{N}) \le 300\text{ seconds}$$
 2. **The Signature of Flesh:** The agent signs the nonce using its private key:
-$$\sigma = \operatorname{ECDSA-Sign}_{K_{\text{priv}}}(\mathcal{N})$$
-3. **The Issuance of Ephemeral Life:** ANUBIS validates $\operatorname{ECDSA-Verify}_{K_{\text{pub}}}(\mathcal{N}, \sigma) = 1$. Upon verification, the nonce is burned forever and an ephemeral instance-bound **ES256 JWT** is minted:
-$$\mathcal{T}_{\text{jwt}} = \operatorname{Sign}_{\text{Anubis}}\Big(\operatorname{sub}=\mathbf{ID}(a), \, \operatorname{jti}=\mu, \, \operatorname{exp}=t_{\text{now}} + 900\text{s}, \, \operatorname{scope}=\mathcal{S}\Big)$$
+$$\sigma = \mathrm{Sign}_{K_{\mathrm{priv}}}(\mathcal{N})$$
+3. **The Issuance of Ephemeral Life:** ANUBIS validates $\mathrm{Verify}_{K_{\mathrm{pub}}}(\mathcal{N}, \sigma) = 1$. Upon verification, the nonce is burned forever and an ephemeral instance-bound **ES256 JWT** is minted:
+$$\mathcal{T}_{\mathrm{jwt}} = \mathrm{Sign}_{\mathrm{ANUBIS}}\Big(\mathrm{sub}=\mathbf{ID}(a), \, \mathrm{jti}=\mu, \, \mathrm{exp}=t_{\mathrm{now}} + 900\mathrm{s}, \, \mathrm{scope}=\mathcal{S}\Big)$$
 
 * **Replay Immunity:** Replayed challenges are consumed by hellfire. Intercepted tokens expire within 15 minutes.
 
@@ -167,9 +167,9 @@ When an autonomous agent delegates work to a child sub-agent (`POST /auth/exchan
   |Scope(Child)| ≤ |Scope(Parent)|
 ```
 
-$$\mathcal{S}_{\text{child}} \subseteq \mathcal{S}_{\text{parent}} \quad \iff \quad \forall s \in \mathcal{S}_{\text{child}}, \; s \in \mathcal{S}_{\text{parent}}$$
+$$\mathcal{S}_{\mathrm{child}} \subseteq \mathcal{S}_{\mathrm{parent}} \quad \iff \quad \forall s \in \mathcal{S}_{\mathrm{child}}, \; s \in \mathcal{S}_{\mathrm{parent}}$$
 
-* **Privilege Escalation Impossibility:** If $\exists s \in \mathcal{S}_{\text{child}}$ such that $s \notin \mathcal{S}_{\text{parent}}$, the request is rejected with `HTTP 403 Forbidden`.
+* **Privilege Escalation Impossibility:** If $\exists s \in \mathcal{S}_{\mathrm{child}}$ such that $s \notin \mathcal{S}_{\mathrm{parent}}$, the request is rejected with `HTTP 403 Forbidden`.
 * **The Ancestral Actor Chain (`act`):** The cryptographic lineage vector is appended monotonically into the token payload:
 $$\mathbf{act}_{k} = \big[ \mathbf{ID}(a_0), \, \mathbf{ID}(a_1), \, \dots, \, \mathbf{ID}(a_k) \big]$$
 Downstream tools inspect not merely the immediate caller, but the entire ancestral bloodline of agents.
@@ -192,7 +192,7 @@ Agents must never touch, store, or view master credentials, database passwords, 
 1. **Vault Isolation:** Downstream secrets reside strictly in the encrypted vaults of ANUBIS.
 2. **Credential Brokering:** ANUBIS injects secrets directly into downstream tool executions on behalf of the agent.
 3. **Mutilation & Redaction:** Outgoing tool responses are scrubbed with regex and string sanitizers:
-$$\operatorname{Response}_{\text{sanitized}} = \operatorname{ScrubSecrets}\big(\operatorname{Response}_{\text{raw}}, \; \mathcal{V}_{\text{secrets}}\big)$$
+$$\mathrm{Response}_{\mathrm{sanitized}} = \mathrm{ScrubSecrets}\big(\mathrm{Response}_{\mathrm{raw}}, \; \mathcal{V}_{\mathrm{secrets}}\big)$$
 Raw database tokens, passwords, and private keys can never leak into LLM context windows or conversation logs.
 
 ---
@@ -205,10 +205,10 @@ Every single tool attempt, argument payload, verdict, latency measurement, and e
   H_i = SHA-256( CanonicalJSON( Event_i ) || H_{i-1} )    ∀ i ≥ 1
 ```
 
-$$H_i = \operatorname{SHA-256}\Big(\operatorname{CanonicalJSON}(\mathcal{E}_i) \mathbin{\Vert} H_{i-1}\Big)$$
+$$H_i = \mathrm{SHA256}\Big(\mathrm{CanonicalJSON}(\mathcal{E}_i) \mathbin{\Vert} H_{i-1}\Big)$$
 
 * **Tamper Evident:** If an insider, attacker, or compromised root account alters a single character in record $k$, the chain breaks for all subsequent records $j \ge k$:
-$$\exists k : H_k \ne \operatorname{SHA-256}\big(\mathcal{E}_k \mathbin{\Vert} H_{k-1}\big) \implies \text{Tamper Alarm Triggered}$$
+$$\exists k : H_k \ne \mathrm{SHA256}\big(\mathcal{E}_k \mathbin{\Vert} H_{k-1}\big) \implies \text{Tamper Alarm Triggered}$$
 A single call to `GET /audit/verify` detects mathematical corruption in milliseconds.
 
 ---
@@ -217,8 +217,8 @@ A single call to `GET /audit/verify` detects mathematical corruption in millisec
 The Detection Engine monitors rolling sliding-window telemetry buffers for each active soul:
 
 1. **Denial Burst Anomaly Rule:**
-$$\mathcal{D}(a, \Delta t) = \sum_{t_i \in [t_{\text{now}} - \Delta t, \, t_{\text{now}}]} \mathbb{I}\Big(\operatorname{Verdict}(a, t_i) = \text{DENY}\Big)$$
-$$\text{If } \mathcal{D}(a, 60\text{s}) \ge 5 \implies \operatorname{Action}(a) \leftarrow \text{CRITICAL SUSPENSION}$$
+$$\mathcal{D}(a, \Delta t) = \sum_{t_i \in [t_{\mathrm{now}} - \Delta t, \, t_{\mathrm{now}}]} \mathbb{I}\Big(\mathrm{Verdict}(a, t_i) = \text{DENY}\Big)$$
+$$\text{If } \mathcal{D}(a, 60\mathrm{s}) \ge 5 \implies \mathrm{Action}(a) \leftarrow \text{CRITICAL SUSPENSION}$$
 
 2. **Automated Multi-Vector Retribution:** The agent is suspended in the registry, and an immediate blacklist entry is injected into the **5-Dimensional Kill Switch Manifold**:
 $$\mathbf{K} \subseteq \mathcal{A} \times \mathcal{I} \times \mathcal{T} \times \mathcal{J} \times \mathcal{P}$$
