@@ -11,6 +11,7 @@ from anubis.services.gateway.models import Tool
 from anubis.services.audit.service import AuditService
 from anubis.services.revocation.service import RevocationService
 from anubis.services.approvals.service import ApprovalService
+from anubis.services.detection.engine import DetectionEngine
 from anubis.services.gateway.schemas import (
     MCPRequest, MCPResponse, MCPError, MCPCallParams, ToolCreate
 )
@@ -205,6 +206,13 @@ class GatewayService:
                 reason=f"Policy evaluation failure: {str(exc)}",
                 latency_ms=latency_ms
             )
+            DetectionEngine.inspect_and_record(
+                db=db,
+                agent_id=agent.id,
+                tool_name=tool_name,
+                decision="deny",
+                arguments=arguments
+            )
             return MCPResponse(
                 id=req_id,
                 error=MCPError(
@@ -229,6 +237,13 @@ class GatewayService:
                 arguments=arguments,
                 reason=decision_response.reason,
                 latency_ms=latency_ms
+            )
+            DetectionEngine.inspect_and_record(
+                db=db,
+                agent_id=agent.id,
+                tool_name=tool_name,
+                decision="deny",
+                arguments=arguments
             )
             return MCPResponse(
                 id=req_id,
@@ -283,6 +298,13 @@ class GatewayService:
                     reason=decision_response.reason,
                     latency_ms=latency_ms
                 )
+                DetectionEngine.inspect_and_record(
+                    db=db,
+                    agent_id=agent.id,
+                    tool_name=tool_name,
+                    decision="require_approval",
+                    arguments=arguments
+                )
                 return MCPResponse(
                     id=req_id,
                     result={
@@ -319,6 +341,13 @@ class GatewayService:
             arguments=arguments,
             reason=decision_response.reason,
             latency_ms=latency_ms
+        )
+        DetectionEngine.inspect_and_record(
+            db=db,
+            agent_id=agent.id,
+            tool_name=tool_name,
+            decision="allow",
+            arguments=arguments
         )
 
         # 9. Sanitize & redact any secrets from the outgoing result
