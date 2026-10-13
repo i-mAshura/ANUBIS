@@ -129,7 +129,11 @@ ANUBIS enforces an unyielding divide between the ethereal plane of governance (*
 
 ### 1. 𓋹 The Crypt of Souls: Atomic Cryptographic Identity
 No nameless specter may step through the gate. At agent registration (`POST /agents`), the agent’s unique identifier is derived **atomically** from the `SHA-256` cryptographic fingerprint of its Subject Public Key Info (SPKI) under **ECDSA curve P-256**:
-$$\text{Agent ID} = \texttt{agt\_} \parallel \text{Hex}(\text{SHA-256}(\text{PublicKey}_{\text{DER}}))[:24]$$
+
+```text
+Agent ID = "agt_" + Hex( SHA-256( SubjectPublicKeyInfo_DER ) )[0..24]
+```
+
 The private key is forged and sealed strictly on the agent's side. The ANUBIS control plane never beholds the private key.
 
 ### 2. 𓇯 The Weighing of the Heart: Challenge-Response Ritual
@@ -141,9 +145,13 @@ Static API keys are heresy. When an agent demands tool access:
 
 ### 3. 𓍝 The Scales of Ma'at: Monotonic Scope Narrowing
 When an agent spawns a subservient sub-agent (`POST /auth/exchange`), it can never grant more authority than it holds:
-$$\text{Scope}_{\text{child}} \subseteq \text{Scope}_{\text{parent}}$$
-Attempts at privilege escalation are crushed fail-closed. The ancestry is permanently stitched into the JWT `act` (actor) claim:
-$$\text{act} = [\text{Orchestrator}, \text{SubAgent}, \text{Worker}]$$
+
+```text
+Scope(Child Agent) ⊆ Scope(Parent Agent)
+Lineage Tracking:  act = ["Orchestrator", "SubAgent", "Worker"]
+```
+
+Attempts at privilege escalation are crushed fail-closed. The ancestry is permanently stitched into the JWT `act` (actor) claim.
 
 ### 4. 𓆣 The Obsidian Gate: Fail-Closed MCP Proxy & Credential Broker
 The agent **never touches raw credentials** for production databases, cloud services, or MCP servers.
@@ -154,11 +162,15 @@ The agent **never touches raw credentials** for production databases, cloud serv
 
 ### 5. 𓉣 The Book of the Dead: Cryptographic Hash-Chained Audit Trail
 Every single attempt, tool name, argument, decision, latency metric, and error is inscribed into an append-only cryptographic ledger chained by SHA-256:
-$$\text{Hash}_n = \text{SHA-256}(\text{Record}_n \parallel \text{Hash}_{n-1})$$
+
+```text
+Hash[n] = SHA-256( Record[n] || Hash[n-1] )
+```
+
 Any attempt by a rogue agent, insider, or root user to alter or excise a single byte invalidates the ledger. A single call to `GET /audit/verify` detects mathematical tampering across milliseconds.
 
 ### 6. 𓀠 The Plea for Mercy: Human-in-the-Loop Approvals
-When a tool invocation crosses high-risk thresholds (e.g., balance transfers $> \$5,000$, database table drops, external email dispatches):
+When a tool invocation crosses high-risk thresholds (e.g., balance transfers > $5,000, database table drops, external email dispatches):
 - The Gateway intercepts the call and puts it on hold: `pending_approval`.
 - A persistent approval record is forged with a cryptographic timeout (`expires_at`).
 - A mortal supervisor inspects the request via `GET /approvals` and renders judgment (`POST /approvals/{id}/decision`).
@@ -166,9 +178,13 @@ When a tool invocation crosses high-risk thresholds (e.g., balance transfers $> 
 
 ### 7. 𓌃 The Scourge of Ammit: Automated Anomaly Retribution & Kill Switch
 The Detection Engine continuously monitors telemetry sliding windows:
-- **Denial Burst Rule:** If an agent incurs $\ge 5$ permission denials within 60 seconds, ANUBIS classifies it as hostile prompt injection or privilege probing.
+- **Denial Burst Rule:** If an agent incurs ≥ 5 permission denials within 60 seconds, ANUBIS classifies it as hostile prompt injection or privilege probing.
 - **Automated Retribution:** Instantly suspends the agent in the database and triggers the **5-Dimensional Kill Switch**:
-$$\text{Revocation Targets} \in \{\text{Agent ID}, \text{Instance ID}, \text{Task ID}, \text{Token JTI}, \text{Human Principal}\}$$
+
+```text
+Revocation Targets ∈ { Agent ID, Instance ID, Task ID, Token JTI, Human Principal }
+```
+
 Subsequent tool calls are blocked at the perimeter with immediate HTTP 403 termination.
 
 ---
