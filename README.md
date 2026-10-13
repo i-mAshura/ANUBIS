@@ -190,9 +190,61 @@ Spawns PostgreSQL, Redis, OPA, and the ANUBIS API in an isolated containerized p
 
 ---
 
+## 🐍 The Serpent's Grasp: Python SDK & Autonomous Agent Client
+
+ANUBIS provides a first-class Python SDK (`anubis.sdk`) designed for plug-and-play zero-trust governance across LLM agents and multi-agent frameworks (LangChain, AutoGen, CrewAI):
+
+```python
+from anubis.sdk import AnubisAgent, AnubisClient
+
+# 1. Initialize client & register agent with local ECDSA P-256 keys
+client = AnubisClient(base_url="http://localhost:8000")
+agent = AnubisAgent(
+    name="Orchestrator-Prime",
+    owner_id="own_99182",
+    purpose="Autonomous Financial Reconciliation",
+    risk_tier="medium",
+    capabilities=["tools:read", "tools:finance"],
+    client=client
+)
+# Authenticates via cryptographic challenge-response
+agent.bootstrap(scope=["tools:read", "tools:finance"])
+
+# 2. Invoke MCP Tool (mediated by OPA policy, credentials brokered securely)
+result = agent.execute_tool(
+    server="corp-db",
+    tool_name="read_records",
+    arguments={"table": "quarterly_reports"}
+)
+
+# 3. Spawn Sub-Agent with Monotonic Scope Narrowing & 'act' Lineage
+sub_agent = agent.spawn_subagent(
+    name="Worker-Sub",
+    purpose="Data extraction",
+    task_intent="Extract quarterly numbers",
+    delegated_scope=["tools:read"]  # Monotonically narrowed: cannot transfer funds
+)
+```
+
+### 🚀 Run the Complete End-to-End Autonomous Agent Demo:
+```powershell
+python examples/autonomous_research_workflow.py
+```
+This runnable script walks through:
+* Asymmetric keypair generation & atomic ID derivation (`agt_<hash>`)
+* Challenge-response authentication & token acquisition
+* Permitted tool execution with downstream secret redaction
+* Sub-agent spawning with monotonic scope narrowing
+* Privilege escalation rejection (fail-closed)
+* Human supervisor approval hold-and-resume workflow
+* Cryptographic hash-chain audit ledger verification
+* Anomaly detection denial burst triggering automated kill-switch retribution!
+
+---
+
 ## 🧪 The Trials of Fire (Test Suite)
 
-Run the automated test suite verifying registry validation, signature challenges, tampered tokens, expired tokens, and replay prevention:
+Run the automated test suite verifying all 7 phases (identity, challenge-response, policy evaluation, gateway MCP mediation, hash-chained audit ledger, delegation exchange, human approvals, multi-dimensional kill switch, anomaly detection, and Python SDK):
 
 ```powershell
 python -m pytest -v
@@ -200,21 +252,59 @@ python -m pytest -v
 
 ```text
 ============================= test session starts =============================
-tests/test_auth.py::test_jwks_endpoint PASSED                            [  7%]
+tests/test_approvals.py::test_approval_hold_and_resume_flow PASSED       [  1%]
+tests/test_approvals.py::test_rejection_of_approval_request PASSED       [  3%]
+tests/test_audit.py::test_agent_cryptographic_unique_id_created_at_registration PASSED [  5%]
+tests/test_audit.py::test_audit_hash_chain_logged_on_gateway_calls PASSED [  7%]
+tests/test_audit.py::test_audit_secret_redaction PASSED                  [  9%]
+tests/test_audit.py::test_tamper_detection_on_altered_record PASSED      [ 11%]
+tests/test_auth.py::test_jwks_endpoint PASSED                            [ 13%]
 tests/test_auth.py::test_full_challenge_response_authentication PASSED   [ 15%]
-tests/test_auth.py::test_auth_wrong_signature_fails PASSED               [ 23%]
-tests/test_registry.py::test_create_and_get_owner PASSED                 [ 30%]
-tests/test_registry.py::test_register_agent_with_auto_keypair PASSED     [ 38%]
-tests/test_registry.py::test_register_agent_with_custom_keypair PASSED   [ 46%]
-tests/test_registry.py::test_update_agent_status_suspend_and_revoke PASSED [ 53%]
-tests/test_tokens.py::test_valid_token_issuance_and_verification PASSED  [ 61%]
-tests/test_tokens.py::test_expired_token_rejected PASSED                 [ 69%]
-tests/test_tokens.py::test_tampered_token_payload_rejected PASSED        [ 76%]
-tests/test_tokens.py::test_tampered_token_signature_rejected PASSED      [ 84%]
-tests/test_tokens.py::test_replayed_challenge_rejected PASSED            [ 92%]
+tests/test_auth.py::test_auth_wrong_signature_fails PASSED               [ 17%]
+tests/test_delegation.py::test_task_creation_and_lifecycle PASSED        [ 19%]
+tests/test_delegation.py::test_token_exchange_scope_narrowing_and_act_chain PASSED [ 21%]
+tests/test_delegation.py::test_privilege_escalation_attempt_strictly_denied PASSED [ 23%]
+tests/test_delegation.py::test_multi_agent_workflow_simulation PASSED    [ 25%]
+tests/test_delegation.py::test_cannot_delegate_to_revoked_or_suspended_agent PASSED [ 27%]
+tests/test_detection.py::test_baseline_tracking_and_retrieval PASSED     [ 29%]
+tests/test_detection.py::test_novel_tool_probe_alert PASSED              [ 31%]
+tests/test_detection.py::test_denial_burst_automated_killswitch PASSED   [ 33%]
+tests/test_detection.py::test_alert_update_lifecycle PASSED              [ 35%]
+tests/test_gateway.py::test_gateway_mcp_tools_list PASSED                [ 37%]
+tests/test_gateway.py::test_gateway_authorized_tool_call_and_credential_brokering PASSED [ 39%]
+tests/test_gateway.py::test_gateway_unauthorized_tool_call_missing_scope PASSED [ 41%]
+tests/test_gateway.py::test_gateway_argument_violation_triggers_approval PASSED [ 43%]
+tests/test_gateway.py::test_gateway_dangerous_tool_denied PASSED         [ 45%]
+tests/test_gateway.py::test_gateway_rejects_missing_and_invalid_token PASSED [ 47%]
+tests/test_gateway.py::test_gateway_instant_kill_switch_revocation PASSED [ 49%]
+tests/test_gateway.py::test_gateway_fail_closed_on_policy_outage PASSED  [ 50%]
+tests/test_policy.py::test_policy_allow_read_tool PASSED                 [ 52%]
+tests/test_policy.py::test_policy_deny_missing_scope PASSED              [ 54%]
+tests/test_policy.py::test_policy_internal_vs_external_email PASSED      [ 56%]
+tests/test_policy.py::test_policy_financial_transaction_threshold PASSED [ 58%]
+tests/test_policy.py::test_policy_dangerous_tool_denied_for_low_tier PASSED [ 60%]
+tests/test_policy.py::test_policy_registration_and_simulation_api PASSED [ 62%]
+tests/test_registry.py::test_create_and_get_owner PASSED                 [ 64%]
+tests/test_registry.py::test_register_agent_with_auto_keypair PASSED     [ 66%]
+tests/test_registry.py::test_register_agent_with_custom_keypair PASSED   [ 68%]
+tests/test_registry.py::test_update_agent_status_suspend_and_revoke PASSED [ 70%]
+tests/test_revocation.py::test_kill_switch_by_agent_id PASSED            [ 72%]
+tests/test_revocation.py::test_kill_switch_by_instance_id PASSED         [ 74%]
+tests/test_revocation.py::test_kill_switch_by_token_jti PASSED           [ 76%]
+tests/test_revocation.py::test_kill_switch_by_human_principal PASSED     [ 78%]
+tests/test_sdk.py::test_sdk_registration_and_authentication PASSED       [ 80%]
+tests/test_sdk.py::test_sdk_tool_invocation_and_credential_isolation PASSED [ 82%]
+tests/test_sdk.py::test_sdk_delegation_and_monotonic_narrowing PASSED    [ 84%]
+tests/test_sdk.py::test_sdk_human_approval_hold_and_resume PASSED        [ 86%]
+tests/test_sdk.py::test_sdk_anomaly_detection_killswitch PASSED          [ 88%]
+tests/test_tokens.py::test_valid_token_issuance_and_verification PASSED  [ 90%]
+tests/test_tokens.py::test_expired_token_rejected PASSED                 [ 92%]
+tests/test_tokens.py::test_tampered_token_payload_rejected PASSED        [ 94%]
+tests/test_tokens.py::test_tampered_token_signature_rejected PASSED      [ 96%]
+tests/test_tokens.py::test_replayed_challenge_rejected PASSED            [ 98%]
 tests/test_tokens.py::test_suspended_and_revoked_agent_cannot_authenticate PASSED [100%]
 
-======================== 13 passed in 0.27s ========================
+======================== 51 passed in 1.22s ========================
 ```
 
 ---
